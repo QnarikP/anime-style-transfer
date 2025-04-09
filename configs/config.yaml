@@ -1,0 +1,46 @@
+# File: config.yaml
+# Location: project/configs/config.yaml
+# Description: Configuration file for hyperparameters, dataset paths, and training options.
+# RUN python scripts/continue_training.py --config configs/config.yaml --checkpoint experiments/checkpoints/gan_epoch_65.pth
+# General Settings
+experiment_name: "anime_style_transfer_experiment"
+device: "cuda"           # Options: "cuda" or "cpu"
+seed: 42
+
+# Dataset Paths
+dataset:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  download_url: "https://huggingface.co/datasets/BangumiBase/narutoshippuden/resolve/main/all.zip"
+  download_dir: "../data/"
+
+# Image Preprocessing
+preprocessing:
+  target_size: [256, 256]
+
+# Training Hyperparameters
+training:
+  batch_size: 16
+  epochs: 100
+  learning_rate:
+    generator: 0.0002
+    discriminator: 0.0002
+  beta1: 0.5
+  beta2: 0.999
+  log_interval: 500         # Log training metrics every 50 batches
+
+# GAN Loss Options
+gan:
+  loss_type: "BCE"         # Options: BCE, LSGAN, Hinge, etc.
+
+# TensorBoard and Logging
+logging:
+  log_dir: "experiments/logs"
+  tensorboard_dir: "tensorboard"
+  generated_images_dir: "experiments/generated_images"
+
+# Data Augmentation Options (used in transforms)
+augmentation:
+  horizontal_flip_prob: 0.5
+  max_rotation: 20         # degrees
+  crop_size: [256, 256]

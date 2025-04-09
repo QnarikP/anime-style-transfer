@@ -1,0 +1,53 @@
+# File: config_vgg.yaml
+# Location: project/configs/config_vgg.yaml
+# Description: Configuration file for VGG-based GAN model for anime style transfer.
+
+# General Settings
+experiment_name: "anime_style_transfer_vgg_experiment"
+device: "cuda"           # Options: "cuda" or "cpu"
+seed: 42
+
+# Dataset Paths
+dataset:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  download_url: "https://huggingface.co/datasets/BangumiBase/narutoshippuden/resolve/main/all.zip"
+  download_dir: "../data/"
+
+# Image Preprocessing
+preprocessing:
+  target_size: [256, 256]
+
+# Model Specific Settings for VGG-based GAN
+model:
+  output_nc: 3
+  freeze_encoder: true  # Set to true to freeze VGG encoder layers, or false to fine-tune
+
+# Training Hyperparameters
+training:
+  batch_size: 32
+  epochs: 100
+  learning_rate:
+    generator: 0.001
+    discriminator: 0.001
+  beta1: 0.5
+  beta2: 0.999
+  log_interval: 1000         # Log training metrics every 1000 steps
+  lr_decay_step: 10          # Decay every 10 epochs
+  lr_decay_factor: 0.5       # Multiply LR by 0.5 every 10 epochs
+
+# GAN Loss Options (Using LSGAN, so MSE loss will be used in the model)
+gan:
+  loss_type: "LSGAN"
+
+# TensorBoard and Logging
+logging:
+  log_dir: "experiments/logs"
+  tensorboard_dir: "tensorboard"
+  generated_images_dir: "experiments/generated_images"
+
+# Data Augmentation Options (used in transforms)
+augmentation:
+  horizontal_flip_prob: 0.5
+  max_rotation: 20         # degrees
+  crop_size: [256, 256]
